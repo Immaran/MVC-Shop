@@ -12,7 +12,7 @@ namespace MVCProject.Models
         public string Name { get; set; }
         public bool Visibility { get; set; }
         [ForeignKey("Categories")]
-        public int ParentID { get; set; }
+        public int? ParentID { get; set; }
         public virtual Category ParentCategory { get; set; }
         public virtual ICollection<Category> Categories { get; set; }
     }

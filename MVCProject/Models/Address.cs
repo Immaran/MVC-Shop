@@ -14,7 +14,7 @@ namespace MVCProject.Models
         public string City { get; set; }
         public string Street { get; set; }
         public string BuildingNumber { get; set; }
-        public string ApartametnNumber { get; set; }
+        public string ApartmentNumber { get; set; }
         public string PostalCode { get; set; }
         public string UserID { get; set; }
         public virtual ApplicationUser User { get; set; }

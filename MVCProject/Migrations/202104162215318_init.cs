@@ -18,7 +18,7 @@ namespace MVCProject.Migrations
                         City = c.String(),
                         Street = c.String(),
                         BuildingNumber = c.String(),
-                        ApartametnNumber = c.String(),
+                        ApartmentNumber = c.String(),
                         PostalCode = c.String(),
                         UserID = c.String(maxLength: 128),
                     })

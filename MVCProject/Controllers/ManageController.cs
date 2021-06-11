@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Web;
@@ -6,6 +8,7 @@ using System.Web.Mvc;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
+using Microsoft.VisualBasic.ApplicationServices;
 using MVCProject.Models;
 
 namespace MVCProject.Controllers
@@ -15,6 +18,7 @@ namespace MVCProject.Controllers
     {
         private ApplicationSignInManager _signInManager;
         private ApplicationUserManager _userManager;
+        private ApplicationDbContext db = new ApplicationDbContext();
 
         public ManageController()
         {
@@ -72,6 +76,13 @@ namespace MVCProject.Controllers
                 Logins = await UserManager.GetLoginsAsync(userId),
                 BrowserRemembered = await AuthenticationManager.TwoFactorBrowserRememberedAsync(userId)
             };
+
+            //Address address = db.Addresses.Find(userId);
+
+            List<Address> addresses = await db.Addresses.Where(x => x.UserID == userId).ToListAsync();
+
+            ViewBag.Addresses = addresses;
+
             return View(model);
         }
 

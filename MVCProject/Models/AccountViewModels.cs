@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
 namespace MVCProject.Models
@@ -64,6 +65,9 @@ namespace MVCProject.Models
 
     public class RegisterViewModel
     {
+        public string FirstName { get; set; }
+        public string LastName { get; set; }
+        public DateTime DateOfBirth { get; set; }
         [Required]
         [EmailAddress]
         [Display(Name = "Email")]
@@ -110,4 +114,3 @@ namespace MVCProject.Models
         public string Email { get; set; }
     }
 }
-

@@ -12,21 +12,12 @@ namespace MVCProject.Models
     // You can add profile data for the user by adding more properties to your ApplicationUser class, please visit https://go.microsoft.com/fwlink/?LinkID=317594 to learn more.
     public class ApplicationUser : IdentityUser
     {
+		public string FirstName { get; set; }
+		public string LastName { get; set; }
 		[DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
-		public DateTime? Date_of_birth { get; set; }
+		public DateTime? DateOfBirth { get; set; }
         public virtual ICollection<Order> Orders { get; set; }
         public virtual ICollection<Address> Addresses { get; set; }
-
-
-
-
-
-
-
-
-
-
-
 
         public async Task<ClaimsIdentity> GenerateUserIdentityAsync(UserManager<ApplicationUser> manager)
         {
@@ -49,6 +40,7 @@ namespace MVCProject.Models
             return new ApplicationDbContext();
         }
 
+		//public DbSet<ApplicationUser> Users { get; set; }
 		public DbSet<Address> Addresses { get; set; }
         public DbSet<Category> Categories { get; set; }
 		public DbSet<DeliveryMethod> DeliveryMethods { get; set; }
@@ -74,7 +66,6 @@ namespace MVCProject.Models
 			}
 		}
 
-
 		public UserManager<ApplicationUser> LocalUserManager
 		{
 			get
@@ -82,7 +73,6 @@ namespace MVCProject.Models
 				return new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(new ApplicationDbContext()));
 			}
 		}
-
 
 		public ApplicationUser GetUserByID(string userID)
 		{
@@ -94,7 +84,6 @@ namespace MVCProject.Models
 			return user;
 		}
 
-
 		public ApplicationUser GetUserByName(string email)
 		{
 			ApplicationUser user = null;
@@ -104,15 +93,12 @@ namespace MVCProject.Models
 
 			return user;
 		}
-
-
 		public bool RoleExists(string name)
 		{
 			var rm = LocalRoleManager;
 
 			return rm.RoleExists(name);
 		}
-
 
 		public bool CreateRole(string name)
 		{
@@ -122,7 +108,6 @@ namespace MVCProject.Models
 			return idResult.Succeeded;
 		}
 
-
 		public bool CreateUser(ApplicationUser user, string password)
 		{
 			var um = LocalUserManager;
@@ -130,8 +115,6 @@ namespace MVCProject.Models
 
 			return idResult.Succeeded;
 		}
-
-
 		public bool AddUserToRole(string userId, string roleName)
 		{
 			var um = LocalUserManager;
@@ -139,7 +122,6 @@ namespace MVCProject.Models
 
 			return idResult.Succeeded;
 		}
-
 
 		public bool AddUserToRoleByUsername(string username, string roleName)
 		{
@@ -150,7 +132,6 @@ namespace MVCProject.Models
 
 			return idResult.Succeeded;
 		}
-
 
 		public void ClearUserRoles(string userId)
 		{
