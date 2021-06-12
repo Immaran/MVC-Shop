@@ -168,6 +168,18 @@
     <Compile Include="App_Start\IdentityConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
+    <Compile Include="Areas\Admin\AdminAreaRegistration.cs" />
+    <Compile Include="Areas\Admin\Controllers\AddressesController.cs" />
+    <Compile Include="Areas\Admin\Controllers\CategoriesController.cs" />
+    <Compile Include="Areas\Admin\Controllers\DeliveryMethodsController.cs" />
+    <Compile Include="Areas\Admin\Controllers\FilesController.cs" />
+    <Compile Include="Areas\Admin\Controllers\InvoicesController.cs" />
+    <Compile Include="Areas\Admin\Controllers\OrdersController.cs" />
+    <Compile Include="Areas\Admin\Controllers\PaymentMethodsController.cs" />
+    <Compile Include="Areas\Admin\Controllers\ProducersController.cs" />
+    <Compile Include="Areas\Admin\Controllers\ProductsController.cs" />
+    <Compile Include="Areas\Admin\Controllers\TagsController.cs" />
+    <Compile Include="Areas\Admin\Controllers\TaxesController.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\AddressesController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
@@ -228,6 +240,64 @@
     <Content Include="Content\Site.css" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
+    <Content Include="Areas\Admin\Views\web.config" />
+    <Content Include="Areas\Admin\Views\_ViewStart.cshtml" />
+    <Content Include="Areas\Admin\Views\Shared\_Layout.cshtml" />
+    <Content Include="Areas\Admin\Views\Addresses\Create.cshtml" />
+    <Content Include="Areas\Admin\Views\Addresses\Delete.cshtml" />
+    <Content Include="Areas\Admin\Views\Addresses\Details.cshtml" />
+    <Content Include="Areas\Admin\Views\Addresses\Edit.cshtml" />
+    <Content Include="Areas\Admin\Views\Addresses\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\Categories\Create.cshtml" />
+    <Content Include="Areas\Admin\Views\Categories\Delete.cshtml" />
+    <Content Include="Areas\Admin\Views\Categories\Details.cshtml" />
+    <Content Include="Areas\Admin\Views\Categories\Edit.cshtml" />
+    <Content Include="Areas\Admin\Views\Categories\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\DeliveryMethods\Create.cshtml" />
+    <Content Include="Areas\Admin\Views\DeliveryMethods\Delete.cshtml" />
+    <Content Include="Areas\Admin\Views\DeliveryMethods\Details.cshtml" />
+    <Content Include="Areas\Admin\Views\DeliveryMethods\Edit.cshtml" />
+    <Content Include="Areas\Admin\Views\DeliveryMethods\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\Files\Create.cshtml" />
+    <Content Include="Areas\Admin\Views\Files\Delete.cshtml" />
+    <Content Include="Areas\Admin\Views\Files\Details.cshtml" />
+    <Content Include="Areas\Admin\Views\Files\Edit.cshtml" />
+    <Content Include="Areas\Admin\Views\Files\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\Invoices\Create.cshtml" />
+    <Content Include="Areas\Admin\Views\Invoices\Delete.cshtml" />
+    <Content Include="Areas\Admin\Views\Invoices\Details.cshtml" />
+    <Content Include="Areas\Admin\Views\Invoices\Edit.cshtml" />
+    <Content Include="Areas\Admin\Views\Invoices\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\Orders\Create.cshtml" />
+    <Content Include="Areas\Admin\Views\Orders\Delete.cshtml" />
+    <Content Include="Areas\Admin\Views\Orders\Details.cshtml" />
+    <Content Include="Areas\Admin\Views\Orders\Edit.cshtml" />
+    <Content Include="Areas\Admin\Views\Orders\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\PaymentMethods\Create.cshtml" />
+    <Content Include="Areas\Admin\Views\PaymentMethods\Delete.cshtml" />
+    <Content Include="Areas\Admin\Views\PaymentMethods\Details.cshtml" />
+    <Content Include="Areas\Admin\Views\PaymentMethods\Edit.cshtml" />
+    <Content Include="Areas\Admin\Views\PaymentMethods\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\Producers\Create.cshtml" />
+    <Content Include="Areas\Admin\Views\Producers\Delete.cshtml" />
+    <Content Include="Areas\Admin\Views\Producers\Details.cshtml" />
+    <Content Include="Areas\Admin\Views\Producers\Edit.cshtml" />
+    <Content Include="Areas\Admin\Views\Producers\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\Products\Create.cshtml" />
+    <Content Include="Areas\Admin\Views\Products\Delete.cshtml" />
+    <Content Include="Areas\Admin\Views\Products\Details.cshtml" />
+    <Content Include="Areas\Admin\Views\Products\Edit.cshtml" />
+    <Content Include="Areas\Admin\Views\Products\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\Tags\Create.cshtml" />
+    <Content Include="Areas\Admin\Views\Tags\Delete.cshtml" />
+    <Content Include="Areas\Admin\Views\Tags\Details.cshtml" />
+    <Content Include="Areas\Admin\Views\Tags\Edit.cshtml" />
+    <Content Include="Areas\Admin\Views\Tags\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\Taxes\Create.cshtml" />
+    <Content Include="Areas\Admin\Views\Taxes\Delete.cshtml" />
+    <Content Include="Areas\Admin\Views\Taxes\Details.cshtml" />
+    <Content Include="Areas\Admin\Views\Taxes\Edit.cshtml" />
+    <Content Include="Areas\Admin\Views\Taxes\Index.cshtml" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
     <Content Include="Scripts\jquery-3.4.1.min.js" />
@@ -310,6 +380,9 @@
     <EmbeddedResource Include="Migrations\202106111558363_Address update.resx">
       <DependentUpon>202106111558363_Address update.cs</DependentUpon>
     </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Areas\Admin\Data\" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

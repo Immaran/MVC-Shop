@@ -1,0 +1,58 @@
+﻿@model MVCProject.Models.Order
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Order</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Address.Name)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Address.Name)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.DeliveryMethod.Name)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.DeliveryMethod.Name)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Invoice.Name)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Invoice.Name)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.PaymentMethod.Name)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.PaymentMethod.Name)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.User.FirstName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.User.FirstName)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.OrderID }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>
