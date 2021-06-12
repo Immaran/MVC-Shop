@@ -189,19 +189,19 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Migrations\202104162215318_init.cs" />
-    <Compile Include="Migrations\202104162215318_init.Designer.cs">
+    <Compile Include="Migrations\202104162215318_init.designer.cs">
       <DependentUpon>202104162215318_init.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\202106111121544_User update.cs" />
-    <Compile Include="Migrations\202106111121544_User update.Designer.cs">
+    <Compile Include="Migrations\202106111121544_User update.designer.cs">
       <DependentUpon>202106111121544_User update.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\202106111441036_Category update.cs" />
-    <Compile Include="Migrations\202106111441036_Category update.Designer.cs">
+    <Compile Include="Migrations\202106111441036_Category update.designer.cs">
       <DependentUpon>202106111441036_Category update.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\202106111558363_Address update.cs" />
-    <Compile Include="Migrations\202106111558363_Address update.Designer.cs">
+    <Compile Include="Migrations\202106111558363_Address update.designer.cs">
       <DependentUpon>202106111558363_Address update.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
@@ -238,8 +238,6 @@
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
-    <Content Include="Scripts\bootstrap.js" />
-    <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Areas\Admin\Views\web.config" />
     <Content Include="Areas\Admin\Views\_ViewStart.cshtml" />
     <Content Include="Areas\Admin\Views\Shared\_Layout.cshtml" />
@@ -298,7 +296,17 @@
     <Content Include="Areas\Admin\Views\Taxes\Details.cshtml" />
     <Content Include="Areas\Admin\Views\Taxes\Edit.cshtml" />
     <Content Include="Areas\Admin\Views\Taxes\Index.cshtml" />
+    <Content Include="fonts\glyphicons-halflings-regular.woff2" />
+    <Content Include="fonts\glyphicons-halflings-regular.woff" />
+    <Content Include="fonts\glyphicons-halflings-regular.ttf" />
+    <Content Include="fonts\glyphicons-halflings-regular.eot" />
+    <Content Include="Content\bootstrap.min.css.map" />
+    <Content Include="Content\bootstrap.css.map" />
+    <Content Include="Content\bootstrap-theme.min.css.map" />
+    <Content Include="Content\bootstrap-theme.css.map" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
+    <Content Include="Scripts\bootstrap.js" />
+    <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
     <Content Include="Scripts\jquery-3.4.1.min.js" />
     <Content Include="Scripts\jquery-3.4.1.slim.js" />
@@ -355,34 +363,30 @@
     <Content Include="Views\Manage\VerifyPhoneNumber.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="fonts\glyphicons-halflings-regular.woff2" />
-    <Content Include="fonts\glyphicons-halflings-regular.woff" />
-    <Content Include="fonts\glyphicons-halflings-regular.ttf" />
-    <Content Include="fonts\glyphicons-halflings-regular.eot" />
-    <Content Include="Content\bootstrap.min.css.map" />
-    <Content Include="Content\bootstrap.css.map" />
-    <Content Include="Content\bootstrap-theme.min.css.map" />
-    <Content Include="Content\bootstrap-theme.css.map" />
     <None Include="packages.config" />
     <Content Include="Scripts\jquery-3.4.1.slim.min.map" />
     <Content Include="Scripts\jquery-3.4.1.min.map" />
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="Areas\Admin\Data\" />
+  </ItemGroup>
+  <ItemGroup>
     <EmbeddedResource Include="Migrations\202104162215318_init.resx">
       <DependentUpon>202104162215318_init.cs</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202106111121544_User update.resx">
       <DependentUpon>202106111121544_User update.cs</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202106111441036_Category update.resx">
       <DependentUpon>202106111441036_Category update.cs</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202106111558363_Address update.resx">
       <DependentUpon>202106111558363_Address update.cs</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
-  </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Areas\Admin\Data\" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
