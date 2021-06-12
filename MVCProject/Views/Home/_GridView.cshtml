@@ -1,0 +1,47 @@
+﻿@model IEnumerable<MVCProject.Models.Product>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Name)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Price)
+        </th>
+        <th>
+            Category
+        </th>
+        <th>
+            Producer
+        </th>
+        <th>
+            Tax
+        </th>
+        <th>
+            Akcje
+        </th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Price)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Category.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Producer.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Tax.Name)
+            </td>
+            <td>
+                @Html.ActionLink("Details", "Details", "Products", new { area = "", id = item.ProductID }, null)
+            </td>
+        </tr>
+    }
+</table>

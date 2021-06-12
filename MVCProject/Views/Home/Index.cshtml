@@ -1,31 +1,129 @@
 ﻿@{
-    ViewBag.Title = "Home Page";
+    ViewBag.Title = "Sklep Internetowy";
 }
 
-<div class="jumbotron">
-    <h1>ASP.NET</h1>
-    <p class="lead">ASP.NET is a free web framework for building great Web sites and Web applications using HTML, CSS and JavaScript.</p>
-    <p><a href="https://asp.net" class="btn btn-primary btn-lg">Learn more &raquo;</a></p>
+<h2>Strona główna</h2>
+<div class="row">
+    <div class="col-sm-12">
+        <div class="form-inline pull-left">
+            <label>Search</label>
+            <input type="text" class="form-control" id="txtSearch" />
+        </div>
+    </div>
+    <div id="gridProducts"></div>
 </div>
 
-<div class="row">
-    <div class="col-md-4">
-        <h2>Getting started</h2>
-        <p>
-            ASP.NET MVC gives you a powerful, patterns-based way to build dynamic websites that
-            enables a clean separation of concerns and gives you full control over markup
-            for enjoyable, agile development.
-        </p>
-        <p><a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=301865">Learn more &raquo;</a></p>
-    </div>
-    <div class="col-md-4">
-        <h2>Get more libraries</h2>
-        <p>NuGet is a free Visual Studio extension that makes it easy to add, remove, and update libraries and tools in Visual Studio projects.</p>
-        <p><a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=301866">Learn more &raquo;</a></p>
-    </div>
-    <div class="col-md-4">
-        <h2>Web Hosting</h2>
-        <p>You can easily find a web hosting company that offers the right mix of features and price for your applications.</p>
-        <p><a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=301867">Learn more &raquo;</a></p>
-    </div>
-</div>
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+
+<script>
+    $(() => {
+        getProducts();
+        $('#txtSearch').on('keyup', () => {
+            getProducts();
+        });
+    });
+
+    function getProducts() {
+        $.ajax({
+            url: '@Url.Action("SearchProducts", "Home")',
+            datatype: 'html',
+            method: 'GET',
+            data: { searchText: $('#txtSearch').val() },
+            success: function (res) {
+                $('#gridProducts').html('').html(res);
+            },
+            error: function (error) {
+                console.log(error);
+            }
+        })
+    }
+</script>
+
+
+
+
+@*@section scripts {
+        @Scripts.Render("~bundles/jqueryval")
+        @Scripts.Render("~/Scripts/selectize.js")
+
+        <script type="text/javascript">
+            var $select;
+
+            $(document).ready(function () {
+                $select = $('#ProductsList').selectize({
+                    valueField: 'ProductId',
+                    labelField: 'Name',
+                    searchField: ['Name', 'Price'],
+                    sortField: 'Name',
+                    onInitialize: function () {
+                        loadProductsAJAX();
+                    },
+                    render: {
+                        option: function (item, escape) {
+                            return '<div class="selectDiv">' +
+                                '<span class="mainName">' + escape(item.Name) + '<span><br/>' +
+                                '<span class="subLabel">Price: </span>' + '<span class="subValue">' + escape(item.Price) + '</span>' +
+                                '</div>';
+                        }
+                    }
+                });
+
+                $('#Refresh').click(function () {
+                    loadProductsAJAX();
+                })
+            });
+
+            function loadProductsAJAX() {
+                $.ajax({
+                    url: '/Home/GetProducts',
+                    type: 'POST',
+                    success: function (data) {
+                        for (var i = 0; i < data.length; i++)
+                            $select[0].selectize.addOption(data[i]);
+                    },
+                    error: function (response) {
+                        alert('Error: ' + response);
+                    }
+                });
+            }
+
+
+        </script>
+    }*@
+
+@*@section css {
+        @Styles.Render("~/Content/selectize.bootstrap3.css")
+
+        <style type="text/css">
+            .selectize-dropdown .active {
+                background-color: #428BCA;
+                color: #FFFFFF;
+            }
+
+            div.selectDiv {
+                border-bottom: 1px solid #e0e0e0;
+            }
+
+            .mainName {
+                font-size: 12px;
+            }
+
+            .subLabel {
+                font-size: 10px;
+                font-weight: bolder;
+                padding-left: 10px;
+            }
+
+            .subValue {
+                font-size: 10px;
+            }
+
+            .mainRow {
+
+            }
+
+            .selectizeFormGroup {
+
+            }
+        </style>
+    }*@
