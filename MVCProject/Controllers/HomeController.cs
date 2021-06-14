@@ -26,6 +26,8 @@ namespace MVCProject.Controllers
             return PartialView("_GridView", result);
         }
 
+
+
         public List<Product> GetProducts()
         {
             var products = db.Products.Include(p => p.Category).Include(p => p.Producer).Include(p => p.Tax);
