@@ -16,8 +16,26 @@ namespace MVCProject.Controllers
     {
         private ApplicationDbContext db = new ApplicationDbContext();
 
-        public ActionResult Index(string searchText, string currentFilter, int? page)
+        public ActionResult Index(string searchText, string currentFilter, int? page, int? pageSize)
         {
+            //var model = new ProductFileViewModel()
+            //{
+            //    Products = GetProducts(),
+            //    Files = db.Files.Include(x => x.Product_Files),
+            //};
+            int pageIndex = 1;
+            pageIndex = page.HasValue ? Convert.ToInt32(page) : 1;
+            int defaSize = (pageSize ?? 5);
+            ViewBag.psize = defaSize;
+
+            ViewBag.PageSize = new List<SelectListItem>()
+            {
+                new SelectListItem() { Value="5", Text= "5" },
+                new SelectListItem() { Value="10", Text= "10" },
+                new SelectListItem() { Value="15", Text= "15" },
+                new SelectListItem() { Value="25", Text= "25" },
+                new SelectListItem() { Value="50", Text= "50" },
+             };
             if (searchText != null)
             {
                 page = 1;
@@ -26,15 +44,23 @@ namespace MVCProject.Controllers
             {
                 searchText = currentFilter;
             }
-
             ViewBag.CurrentFilter = searchText;
             var products = GetProducts();
             if (!String.IsNullOrEmpty(searchText))
             {
                 products = products.Where(a => a.Name.ToLower().Contains(searchText?.ToLower()) || a.Producer.Name.ToLower().Contains(searchText?.ToLower())).ToList();
             }
-            return View(products.ToPagedList(page ?? 1, 1));
+            return View(products.ToPagedList(pageIndex, defaSize));
         }
+
+        public ActionResult Popular()
+        {
+            var products = GetProducts();
+            products = products.OrderByDescending(i => i.Sold_units).Take(1).ToList();
+            return View(products);
+        }
+
+        
 
         //public PartialViewResult SearchProducts(string searchText)
         //{

@@ -1,28 +1,20 @@
-﻿@model IPagedList<MVCProject.Models.Product>
-@using PagedList.Mvc;
-@using PagedList;
+﻿
 @{
-    ViewBag.Title = "Sklep Internetowy";
+    ViewBag.Title = "Popular";
 }
 
-<h2>Strona główna</h2>
+<h2>Popular</h2>
 <div class="row">
     <div class="col-sm-12">
         <div class="form-inline pull-left">
-            @using (Html.BeginForm("Index", "Home", FormMethod.Get, new { id = "form1" }))
+            @using (Html.BeginForm("Index", "Home", FormMethod.Get))
             {
                 <p>
                     @Html.TextBox("SearchText", ViewBag.CurrentFilter as string)
                     <input type="submit" value="Search" />
                 </p>
-                <div id='Paging' style="text-align: left">
-                    @*Dorpdownlist generation code*@
-                    Page Size: @Html.DropDownList("pageSize")
-                </div>
             }
         </div>
-
-        @*<embed src="~/counter.txt">*@
     </div>
     <div class="container">
         <h2 class="text-center">Products List</h2>
@@ -53,15 +45,3 @@
     </div>
 </div>
 
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-
-<script type="text/javascript">
-
-    $(function () {
-        $("#pageSize").change(function () {
-            $("#form1").submit();
-        });
-    });
-</script>
-
-@Html.PagedListPager(Model, page => Url.Action("Index", new { page, currentFilter = ViewBag.CurrentFilter, pageSize = ViewBag.psize }))
