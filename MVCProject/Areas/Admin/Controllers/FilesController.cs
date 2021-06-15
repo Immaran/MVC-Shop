@@ -57,8 +57,9 @@ namespace MVCProject.Areas.Admin.Controllers
                 if ( imageFile.ContentLength > 0)
                 {
                     var fileName = Path.GetFileName(imageFile.FileName);
-                    file.Path = Path.Combine(Server.MapPath("~/Areas/Admin/Images"), fileName);
+                    file.Path = Path.Combine(Server.MapPath("~/Images"), fileName);
                     imageFile.SaveAs(file.Path);
+                    file.Path = "/Images/" + fileName;
                 }
                 db.Files.Add(file);
                 db.SaveChanges();

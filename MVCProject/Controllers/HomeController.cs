@@ -23,6 +23,9 @@ namespace MVCProject.Controllers
             //    Products = GetProducts(),
             //    Files = db.Files.Include(x => x.Product_Files),
             //};
+            var productFiles = db.Product_Files.Include(p => p.File).ToList();
+            ViewBag.Image = productFiles;
+
             int pageIndex = 1;
             pageIndex = page.HasValue ? Convert.ToInt32(page) : 1;
             int defaSize = (pageSize ?? 5);
@@ -88,6 +91,8 @@ namespace MVCProject.Controllers
 
         public ActionResult Details(int? id)
         {
+            var productFiles = db.Product_Files.Include(p => p.File).Where(p => p.ProductID == id).ToList();
+            ViewBag.Image = productFiles;
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);

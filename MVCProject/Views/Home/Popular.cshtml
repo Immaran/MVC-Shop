@@ -34,11 +34,19 @@
                     </div>
                 </div>
 
-                <div class="col-md-8" style="font-size: 18px; border-top: 2px solid maroon; padding: 2px">
-                    <b>Price: @item.Price PLN</b>
+                <div class="col-md-5" style="font-size: 18px; border-top: 2px solid maroon; padding: 2px">
+                    <div>
+                        <b>Price: @item.Price PLN</b>
+                    </div>
+                    <b>In stock: @item.Quantity</b>
+                </div>
+                <div class="col-md-3" style="text-align: right; margin-bottom: 10px; border-top: 2px solid maroon; padding: 2px">
+                    <input type="button" name="Details" value="Details" class="btn btn-primary" productid="@item.ProductID" id="btnDetails" onclick="Details(this)" />
+
                 </div>
                 <div class="col-md-4" style="text-align: right; margin-bottom: 10px; border-top: 2px solid maroon; padding: 2px">
                     <input type="button" name="AddToCart" value="Add to Cart" class="btn btn-primary" productid="@item.ProductID" id="btnAddToCart" onclick="AddToCart(this)" />
+
                 </div>
             </div>
         }

@@ -1,0 +1,58 @@
+﻿@model MVCProject.Models.Product
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div class="center-block" style="border: 2px solid black">
+    <div style="text-align: center; border-bottom: 2px solid black ">
+        <h3>@Html.DisplayFor(model => model.Name)</h3>
+        <h4>@Html.DisplayFor(model => model.Producer.Name)</h4>
+    </div>
+    <div>
+        <div class='card-body text-center'>
+            @for (int i = 0; i < ViewBag.Image.Count; i++)
+            {
+                <img class="center-block" src="@Url.Content(ViewBag.Image[i].File.Path)" width="300px" />
+                <ul class='list-group list-group-flush'>
+                    <li class='list-group-item'>
+                        <div class='row'>
+                            <div class='col-md-12'>
+                                <p>@ViewBag.Image[i].File.Description</p>
+                            </div>
+                        </div>
+                    </li>
+                </ul>
+            }
+        </div>
+    </div>
+</div>
+
+<div class='card-body text-center'>
+    <ul class='list-group list-group-flush'>
+        <li class='list-group-item'>
+            <div class='row'>
+                <div class='col-md-4'>
+                    <p>Category: @Html.DisplayFor(model => model.Category.Name)</p>
+                </div>
+                <div class='col-md-4' word-wrap: break-word>
+                    <p>Price: @Html.DisplayFor(model => model.Price) PLN</p>
+                </div>
+                <div class='col-md-4'>
+                    <p>In stock: @Html.DisplayFor(model => model.Quantity)</p>
+                </div>
+            </div>
+        </li>
+    </ul>
+</div>
+<div class='card-body text-center'>
+    <div class="row">
+        <div class="col-md-12">
+            <p class="text-justify">Ambitioni dedisse scripsisse iudicaretur. Cras mattis iudicium purus sit amet fermentum. Donec sed odio operae, eu vulputate felis rhoncus. Praeterea iter est quasdam res quas ex communi. At nos hinc posthac, sitientis piros Afros. Petierunt uti sibi concilium totius Galliae in diem certam indicere. Cras mattis iudicium purus sit amet fermentum.</p>
+        </div>
+    </div>
+</div>
+<div class="col-md-12" style="text-align: center; margin-bottom: 10px; padding: 2px">
+    <input type="button" name="AddToCart" value="Add to Cart" class="btn btn-primary" productid="@Html.DisplayFor(model => model.Name)" id="btnAddToCart" onclick="AddToCart(this)" />
+</div>
