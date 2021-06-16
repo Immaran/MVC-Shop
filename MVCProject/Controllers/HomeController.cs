@@ -20,7 +20,7 @@ namespace MVCProject.Controllers
 
         public ActionResult Index(string searchText, string currentFilter, int? page, int? pageSize)
         {
-            var productFiles = db.Product_Files.Include(p => p.File).ToList();
+            var productFiles = db.Product_Files.Include(p => p.File).Where(x=>x.Product.Visibility == true).ToList();
             ViewBag.Image = productFiles;
 
             int pageIndex = 1;
@@ -97,7 +97,7 @@ namespace MVCProject.Controllers
 
         public List<Product> GetProducts()
         {
-            var products = db.Products.Include(p => p.Category).Include(p => p.Producer).Include(p => p.Tax);
+            var products = db.Products.Include(p => p.Category).Include(p => p.Producer).Where(x=>x.Visibility == true).Where(p=>p.Category.Visibility == true).Include(p => p.Tax);
             return products.ToList();
         }
 
@@ -110,7 +110,7 @@ namespace MVCProject.Controllers
 
         public ActionResult Details(int? id)
         {
-            var productFiles = db.Product_Files.Include(p => p.File).Where(p => p.ProductID == id).ToList();
+            var productFiles = db.Product_Files.Include(p => p.File).Where(p => p.ProductID == id).Where(p=>p.Product.Visibility == true).ToList();
             ViewBag.Image = productFiles;
             if (id == null)
             {
@@ -213,13 +213,13 @@ namespace MVCProject.Controllers
 
         public ActionResult PDF()
         {
-            var categories = db.Categories.ToList();
+            var categories = db.Categories.Where(c => c.Visibility == true).ToList();
             return View(categories);
         }
 
         public ActionResult PrintPartialViewToPdf(int id)
         {
-            var category = db.Categories.Where(c => c.CategoryID == id).ToList();
+            var category = db.Categories.Where(c => c.CategoryID == id).Where(c=> c.Visibility == true).ToList();
             ViewBag.Products = db.Products.Include(x=>x.Producer).Where(x=>x.CategoryID == id).ToList();
             var report = new PartialViewAsPdf("~/Views/Home/_PDFDetails.cshtml", category);
             return report;
