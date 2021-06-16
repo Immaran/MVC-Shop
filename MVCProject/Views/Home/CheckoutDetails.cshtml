@@ -60,7 +60,7 @@ else
                     for (int i = 0; i < ViewBag.Addresses.Count; i++)
                     {
                         <div class="table-bordered">
-                            <input type="radio" id="addressRadiobox@(i)" name="check0" addressid="@ViewBag.Addresses[i].AddressID">
+                            <input type="radio" id="@ViewBag.Addresses[i].AddressID" name="checkAddress">
                             <label for="check0">Select</label>
                             <dl class="dl-horizontal">
                                 <dt>Name:</dt>
@@ -90,7 +90,7 @@ else
                     for (int j = 0; j < ViewBag.Delivery.Count; j++)
                     {
                         <div class="table-bordered">
-                            <input type="radio" id="deliveryRadiobox@(j)" name="check1" deliveryid="@ViewBag.Delivery[j].DeliveryMethodID">
+                            <input type="radio" id="@ViewBag.Delivery[j].DeliveryMethodID" name="checkDelivery">
                             <label for="check1">Select</label>
                             <dl class="dl-horizontal">
                                 <dt>Name:</dt>
@@ -106,7 +106,7 @@ else
                     for (int j = 0; j < ViewBag.Payment.Count; j++)
                     {
                         <div class="table-bordered">
-                            <input type="radio" id="paymentRadiobox@(j)" name="check2" paynmentid="@ViewBag.Payment[j].PaymentMethodID">
+                            <input type="radio" id="@ViewBag.Payment[j].PaymentMethodID" name="checkPayment">
                             <label for="check2">Select</label>
                             <dl class="dl-horizontal">
                                 <dt>Name:</dt>
@@ -119,5 +119,62 @@ else
         </div>
     </div>
 
-    <button style="margin-bottom: 50px" class="btn btn-success">Payment >></button>
+    <button style="margin-bottom: 50px" class="btn btn-success" id="pay">Payment >></button>
+}
+
+@section scripts
+{
+    <script>
+        var button = document.getElementById("pay")
+        button.addEventListener("click", () => { fin() })
+
+        function fin() {
+            var addNL = document.getElementsByName("checkAddress")
+            var delNL = document.getElementsByName("checkDelivery")
+            var payNL = document.getElementsByName("checkPayment")
+
+            add = Array.prototype.slice.call(addNL)
+            del = Array.prototype.slice.call(delNL)
+            pay = Array.prototype.slice.call(payNL)
+
+            let addressId = -1
+            let deliveryId = -1
+            let paymentId = -1
+
+            Array.prototype.forEach.call(add, element => {
+                if (element.checked == true) {
+                    addressId = element.id
+                }
+            })
+
+            Array.prototype.forEach.call(del, element => {
+                if (element.checked == true) {
+                    deliveryId = element.id
+                }
+            })
+
+            Array.prototype.forEach.call(pay, element => {
+                if (element.checked == true) {
+                    paymentId = element.id
+                }
+            })
+
+            const DTO = {
+                AddressID: parseInt(addressId),
+                PaymentID: parseInt(paymentId),
+                DeliveryID: parseInt(deliveryId)
+            }
+
+            fetch("/Home/CheckoutDetails", {
+                method: "post",
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(DTO)
+            }).then(resp => {
+                debugger
+                if (resp.ok) {
+                    window.location.replace("/Home/Index");
+                }
+            })
+        }
+    </script>
 }
