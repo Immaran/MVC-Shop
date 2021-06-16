@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNet.Identity;
+using MVCProject.DTOs;
 using MVCProject.Models;
 using PagedList;
 using Rotativa;
@@ -9,6 +10,7 @@ using System.Data.Entity;
 using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
+using System.Web.Http;
 using System.Web.Mvc;
 
 namespace MVCProject.Controllers
@@ -224,6 +226,39 @@ namespace MVCProject.Controllers
             Session["cart"] = cart;
 
             return Redirect("Index");
+        }
+
+        [System.Web.Mvc.HttpPost]
+        public HttpStatusCodeResult CheckoutDetails([FromBody] OrderDTO details)
+        {
+            var userId = User.Identity.GetUserId();
+
+
+
+            List<Item> products = (List<Item>)Session["cart"];
+
+            Order order = new Order { UserID = userId, AddressID = details.AddressID, DeliveryMethodID = details.DeliveryID, PaymentMethodID = details.PaymentID };
+
+            order = db.Orders.Add(order);
+            db.SaveChanges();
+
+            foreach (var item in products)
+            {
+                var product = db.Products.Find(item.Product.ProductID);
+
+                product.Quantity -= item.Quantity;
+                product.Sold_units += item.Quantity;
+
+                db.Entry(product).State = EntityState.Modified;
+                db.SaveChanges();
+
+                Product_Order product_order = new Product_Order { ProductID = item.Product.ProductID, ProductQuantity = item.Quantity, OrderID = order.OrderID };
+
+                db.Product_Orders.Add(product_order);
+                db.SaveChanges();
+            }
+
+            return new HttpStatusCodeResult(200);
         }
 
         public ActionResult PDF()

@@ -9,6 +9,7 @@ namespace MVCProject.Models
     {
         public int Product_OrderID { get; set; }
         public int ProductID { get; set; }
+        public int ProductQuantity { get; set; }
         public int OrderID { get; set; }
         public virtual Product Product { get; set; }
         public virtual Order Order { get; set; }
