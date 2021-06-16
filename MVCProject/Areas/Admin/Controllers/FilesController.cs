@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
+using System.IO;
 using System.Linq;
 using System.Net;
 using System.Web;
@@ -21,6 +22,7 @@ namespace MVCProject.Areas.Admin.Controllers
             return View(db.Files.ToList());
         }
 
+
         // GET: Admin/Files/Details/5
         public ActionResult Details(int? id)
         {
@@ -28,7 +30,7 @@ namespace MVCProject.Areas.Admin.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            File file = db.Files.Find(id);
+            Models.File file = db.Files.Find(id);
             if (file == null)
             {
                 return HttpNotFound();
@@ -47,10 +49,18 @@ namespace MVCProject.Areas.Admin.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "FileID,Name,ContentType,Path,Description")] File file)
+        public ActionResult Create([Bind(Include = "FileID,Name,ContentType,Path,Description")] Models.File file)
         {
             if (ModelState.IsValid)
             {
+                HttpPostedFileBase imageFile = Request.Files[0];
+                if ( imageFile.ContentLength > 0)
+                {
+                    var fileName = Path.GetFileName(imageFile.FileName);
+                    file.Path = Path.Combine(Server.MapPath("~/Images"), fileName);
+                    imageFile.SaveAs(file.Path);
+                    file.Path = "/Images/" + fileName;
+                }
                 db.Files.Add(file);
                 db.SaveChanges();
                 return RedirectToAction("Index");
@@ -66,7 +76,7 @@ namespace MVCProject.Areas.Admin.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            File file = db.Files.Find(id);
+            Models.File file = db.Files.Find(id);
             if (file == null)
             {
                 return HttpNotFound();
@@ -79,7 +89,7 @@ namespace MVCProject.Areas.Admin.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "FileID,Name,ContentType,Path,Description")] File file)
+        public ActionResult Edit([Bind(Include = "FileID,Name,ContentType,Path,Description")] Models.File file)
         {
             if (ModelState.IsValid)
             {
@@ -97,7 +107,7 @@ namespace MVCProject.Areas.Admin.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            File file = db.Files.Find(id);
+            Models.File file = db.Files.Find(id);
             if (file == null)
             {
                 return HttpNotFound();
@@ -110,7 +120,7 @@ namespace MVCProject.Areas.Admin.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            File file = db.Files.Find(id);
+            Models.File file = db.Files.Find(id);
             db.Files.Remove(file);
             db.SaveChanges();
             return RedirectToAction("Index");

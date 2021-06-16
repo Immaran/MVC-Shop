@@ -18,7 +18,7 @@ namespace MVCProject.Areas.Admin.Controllers
         // GET: Admin/Products
         public ActionResult Index()
         {
-            var products = db.Products.Include(p => p.Category).Include(p => p.Producer).Include(p => p.Tax);
+            var products = db.Products.Include(p => p.Category).Include(p => p.Producer).Include(p => p.Tax).Include(p => p.Product_Files);
             return View(products.ToList());
         }
 

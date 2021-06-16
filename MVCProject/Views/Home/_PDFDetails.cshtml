@@ -1,0 +1,29 @@
+﻿@model IEnumerable<MVCProject.Models.Category>
+
+<table class="table">
+    <tr>
+        <th>
+            Product Name:
+        </th>
+        <th>
+            Producer:
+        </th>
+        <th>
+            Price:
+        </th>
+    </tr>
+
+    @for (int i = 0; i < ViewBag.Products.Count; i++)
+    {
+        <tr>
+            <td>
+                @ViewBag.Products[i].Name
+            </td>
+            <td>
+                @ViewBag.Products[i].Producer.Name
+            </td>
+            <td>
+                @ViewBag.Products[i].Price
+            </td>
+        </tr>
+    }

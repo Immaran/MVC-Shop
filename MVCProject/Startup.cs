@@ -1,4 +1,5 @@
 ﻿using Microsoft.Owin;
+using MVCProject.Models;
 using Owin;
 
 [assembly: OwinStartupAttribute(typeof(MVCProject.Startup))]

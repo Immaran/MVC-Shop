@@ -9,16 +9,54 @@ using System.Threading.Tasks;
 using System.Web.Mvc;
 using Microsoft.AspNet.Identity;
 using MVCProject.Models;
+using PagedList;
+using PagedList.Mvc;
+using Rotativa;
 
 namespace MVCProject.Controllers
 {
     public class HomeController : Controller
     {
         private ApplicationDbContext db = new ApplicationDbContext();
-        public ActionResult Index()
+
+        public ActionResult Index(string searchText, string currentFilter, int? page, int? pageSize)
         {
+            //var model = new ProductFileViewModel()
+            //{
+            //    Products = GetProducts(),
+            //    Files = db.Files.Include(x => x.Product_Files),
+            //};
+            var productFiles = db.Product_Files.Include(p => p.File).ToList();
+            ViewBag.Image = productFiles;
+
+            int pageIndex = 1;
+            pageIndex = page.HasValue ? Convert.ToInt32(page) : 1;
+            int defaSize = (pageSize ?? 5);
+            ViewBag.psize = defaSize;
+
+            ViewBag.PageSize = new List<SelectListItem>()
+            {
+                new SelectListItem() { Value="5", Text= "5" },
+                new SelectListItem() { Value="10", Text= "10" },
+                new SelectListItem() { Value="15", Text= "15" },
+                new SelectListItem() { Value="25", Text= "25" },
+                new SelectListItem() { Value="50", Text= "50" },
+             };
+            if (searchText != null)
+            {
+                page = 1;
+            }
+            else
+            {
+                searchText = currentFilter;
+            }
+            ViewBag.CurrentFilter = searchText;
             var products = GetProducts();
-            return View(products.ToList());
+            if (!String.IsNullOrEmpty(searchText))
+            {
+                products = products.Where(a => a.Name.ToLower().Contains(searchText?.ToLower()) || a.Producer.Name.ToLower().Contains(searchText?.ToLower())).ToList();
+            }
+            return View(products.ToPagedList(pageIndex, defaSize));
         }
 
         public ActionResult Checkout()
@@ -59,9 +97,22 @@ namespace MVCProject.Controllers
         public PartialViewResult SearchProducts(string searchText)
         {
             var products = GetProducts();
-            var result = products.Where(a => a.Name.ToLower().Contains(searchText.ToLower()) || a.Producer.Name.ToLower().Contains(searchText.ToLower())).ToList();
-            return PartialView("_GridView", result);
+            products = products.OrderByDescending(i => i.Sold_units).Take(1).ToList();
+            return View(products);
         }
+
+        
+
+        //public PartialViewResult SearchProducts(string searchText)
+        //{
+        //    var products = GetProducts();
+        //    if(!String.IsNullOrEmpty(searchText))
+        //    {
+        //        var result = products.Where(a => a.Name.ToLower().Contains(searchText?.ToLower()) || a.Producer.Name.ToLower().Contains(searchText?.ToLower())).ToList();
+        //        return PartialView("_GridView", result);
+        //    }
+        //    return PartialView(products);
+        //}
 
         public List<Product> GetProducts()
         {
@@ -78,6 +129,8 @@ namespace MVCProject.Controllers
 
         public ActionResult Details(int? id)
         {
+            var productFiles = db.Product_Files.Include(p => p.File).Where(p => p.ProductID == id).ToList();
+            ViewBag.Image = productFiles;
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
@@ -175,6 +228,20 @@ namespace MVCProject.Controllers
             Session["cart"] = cart;
 
             return Redirect("Index");
+        }
+
+        public ActionResult PDF()
+        {
+            var categories = db.Categories.ToList();
+            return View(categories);
+        }
+
+        public ActionResult PrintPartialViewToPdf(int id)
+        {
+            var category = db.Categories.Where(c => c.CategoryID == id).ToList();
+            ViewBag.Products = db.Products.Include(x=>x.Producer).Where(x=>x.CategoryID == id).ToList();
+            var report = new PartialViewAsPdf("~/Views/Home/_PDFDetails.cshtml", category);
+            return report;
         }
     }
 }

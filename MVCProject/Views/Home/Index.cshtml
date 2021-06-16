@@ -1,4 +1,7 @@
-﻿@{
+﻿@model IPagedList<MVCProject.Models.Product>
+@using PagedList.Mvc;
+@using PagedList;
+@{
     ViewBag.Title = "Sklep Internetowy";
 }
 
@@ -6,124 +9,73 @@
 <div class="row">
     <div class="col-sm-12">
         <div class="form-inline pull-left">
-            <label>Search</label>
-            <input type="text" class="form-control" id="txtSearch" />
+            @using (Html.BeginForm("Index", "Home", FormMethod.Get, new { id = "form1" }))
+            {
+                <p>
+                    @Html.TextBox("SearchText", ViewBag.CurrentFilter as string)
+                    <input type="submit" value="Search" />
+                </p>
+                <div id='Paging' style="text-align: left">
+                    @*Dorpdownlist generation code*@
+                    Page Size: @Html.DropDownList("pageSize")
+                </div>
+            }
         </div>
+
+        @*<embed src="~/counter.txt">*@
     </div>
-    <div id="gridProducts"></div>
+    <div class="container">
+        <h2 class="text-center">Products List</h2>
+        @foreach (var item in Model)
+        {
+            <div class="col-md-4" style="border: 2px solid black">
+                <div style="text-align: center; border-bottom: 2px solid maroon ">
+                    <h3>@item.Name</h3>
+                    <h4>@item.Producer.Name</h4>
+                </div>
+                <div>
+                    <div class="col-md-8">
+                        @for (int i = 0; i < ViewBag.Image.Count; i++)
+                        {
+                            if (ViewBag.Image[i].ProductID == item.ProductID)
+                            {
+                                <img class="img-responsive" src="@Url.Content(ViewBag.Image[i].File.Path)" width="150px" />
+                                break;
+                            }
+                        }
+                    </div>
+                    <div class="col-md-4" style="text-align: left">
+                        <b>Category: @item.Category.Name</b>
+                    </div>
+                </div>
+
+                <div class="col-md-5" style="font-size: 18px; border-top: 2px solid maroon; padding: 2px">
+                    <div>
+                        <b>Price: @item.Price PLN</b>
+                    </div>
+                    <b>In stock: @item.Quantity</b>
+                </div>
+                <div class="col-md-3" style="text-align: right; margin-bottom: 10px; border-top: 2px solid maroon; padding: 2px">
+                    <input type="button" name="Details" value="Details" class="btn btn-primary" productid="@item.ProductID" id="btnAddToCart" onclick="location.href = '@Url.Action("Details", "Home", new { id=item.ProductID })'" />
+                    
+                </div>
+                <div class="col-md-4" style="text-align: right; margin-bottom: 10px; border-top: 2px solid maroon; padding: 2px">
+                    <input type="button" name="AddToCart" value="Add to Cart" class="btn btn-primary" productid="@item.ProductID" id="btnAddToCart" onclick="AddToCart(this)" />
+                </div>
+            </div>
+        }
+    </div>
 </div>
 
-<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 
-<script>
-    $(() => {
-        getProducts();
-        $('#txtSearch').on('keyup', () => {
-            getProducts();
+<script type="text/javascript">
+
+    $(function () {
+        $("#pageSize").change(function () {
+            $("#form1").submit();
         });
     });
-
-    function getProducts() {
-        $.ajax({
-            url: '@Url.Action("SearchProducts", "Home")',
-            datatype: 'html',
-            method: 'GET',
-            data: { searchText: $('#txtSearch').val() },
-            success: function (res) {
-                $('#gridProducts').html('').html(res);
-            },
-            error: function (error) {
-                console.log(error);
-            }
-        })
-    }
 </script>
 
-
-
-
-@*@section scripts {
-        @Scripts.Render("~bundles/jqueryval")
-        @Scripts.Render("~/Scripts/selectize.js")
-
-        <script type="text/javascript">
-            var $select;
-
-            $(document).ready(function () {
-                $select = $('#ProductsList').selectize({
-                    valueField: 'ProductId',
-                    labelField: 'Name',
-                    searchField: ['Name', 'Price'],
-                    sortField: 'Name',
-                    onInitialize: function () {
-                        loadProductsAJAX();
-                    },
-                    render: {
-                        option: function (item, escape) {
-                            return '<div class="selectDiv">' +
-                                '<span class="mainName">' + escape(item.Name) + '<span><br/>' +
-                                '<span class="subLabel">Price: </span>' + '<span class="subValue">' + escape(item.Price) + '</span>' +
-                                '</div>';
-                        }
-                    }
-                });
-
-                $('#Refresh').click(function () {
-                    loadProductsAJAX();
-                })
-            });
-
-            function loadProductsAJAX() {
-                $.ajax({
-                    url: '/Home/GetProducts',
-                    type: 'POST',
-                    success: function (data) {
-                        for (var i = 0; i < data.length; i++)
-                            $select[0].selectize.addOption(data[i]);
-                    },
-                    error: function (response) {
-                        alert('Error: ' + response);
-                    }
-                });
-            }
-
-
-        </script>
-    }*@
-
-@*@section css {
-        @Styles.Render("~/Content/selectize.bootstrap3.css")
-
-        <style type="text/css">
-            .selectize-dropdown .active {
-                background-color: #428BCA;
-                color: #FFFFFF;
-            }
-
-            div.selectDiv {
-                border-bottom: 1px solid #e0e0e0;
-            }
-
-            .mainName {
-                font-size: 12px;
-            }
-
-            .subLabel {
-                font-size: 10px;
-                font-weight: bolder;
-                padding-left: 10px;
-            }
-
-            .subValue {
-                font-size: 10px;
-            }
-
-            .mainRow {
-
-            }
-
-            .selectizeFormGroup {
-
-            }
-        </style>
-    }*@
+@Html.PagedListPager(Model, page => Url.Action("Index", new { page, currentFilter = ViewBag.CurrentFilter, pageSize = ViewBag.psize }))

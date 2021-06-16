@@ -54,8 +54,9 @@ namespace MVCProject.Models
 		public DbSet<Product_Tag> Product_Tags { get; set; }
 		public DbSet<Tag> Tags { get; set; }
 		public DbSet<Tax> Taxes { get; set; }
+		public DbSet<Counter> Counters { get; set; }
 
-        public System.Data.Entity.DbSet<MVCProject.Models.Invoice> Invoices { get; set; }
+		public System.Data.Entity.DbSet<MVCProject.Models.Invoice> Invoices { get; set; }
     }
 
     public class IdentityManager
