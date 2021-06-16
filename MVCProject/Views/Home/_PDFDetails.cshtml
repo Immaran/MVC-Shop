@@ -1,0 +1,24 @@
+﻿@model IEnumerable<MVCProject.Models.Category>
+
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Name)
+        </th>
+        <th>
+            Price
+        </th>
+    </tr>
+
+    @for (int i = 0; i < ViewBag.Products.Count; i++)
+    {
+        <tr>
+            <td>
+                @ViewBag.Products[i].Name
+            </td>
+            <td>
+                @ViewBag.Products[i].Price
+            </td>
+        </tr>
+
+    }

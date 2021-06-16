@@ -9,6 +9,7 @@ using System.Web.Mvc;
 using MVCProject.Models;
 using PagedList;
 using PagedList.Mvc;
+using Rotativa;
 
 namespace MVCProject.Controllers
 {
@@ -103,6 +104,20 @@ namespace MVCProject.Controllers
                 return HttpNotFound();
             }
             return View(product);
+        }
+
+        public ActionResult PDF()
+        {
+            var categories = db.Categories.ToList();
+            return View(categories);
+        }
+
+        public ActionResult PrintPartialViewToPdf(int id)
+        {
+            var category = db.Categories.Where(c => c.CategoryID == id).ToList();
+            ViewBag.Products = db.Products.Where(x=>x.CategoryID == id).ToList();
+            var report = new PartialViewAsPdf("~/Views/Home/_PDFDetails.cshtml", category);
+            return report;
         }
     }
 }
