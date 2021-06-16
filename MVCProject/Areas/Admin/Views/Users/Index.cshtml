@@ -1,0 +1,60 @@
+﻿@model IEnumerable<MVCProject.Models.ApplicationUser>
+@{
+    ViewBag.Title = "UserList";
+}
+<style>
+    th, td {
+        text-align: center;
+    }
+</style>
+<h2>UserList</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayName("UserName")
+        </th>
+        <th>
+            @Html.DisplayName("Email")
+        </th>
+        <th>
+            @Html.DisplayName("First Name")
+        </th>
+        <th>
+            @Html.DisplayName("Last Name")
+        </th>
+        <th>
+            @Html.DisplayName("Date of Birth")
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+<tr>
+    <td>
+        @Html.DisplayFor(model => item.UserName)
+    </td>
+    <td>
+        @Html.DisplayFor(model => item.Email)
+    </td>
+    <td>
+        @Html.DisplayFor(model => item.FirstName)
+    </td>
+    <td>
+        @Html.DisplayFor(model => item.LastName)
+    </td>
+    <td>
+        @Html.DisplayFor(model => item.DateOfBirth)
+    </td>
+    <td>
+        @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
+        @Html.ActionLink("Delete", "Delete", new { id = item.Id })
+    </td>
+</tr>
+}
+
+</table>
+

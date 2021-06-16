@@ -1,0 +1,9 @@
+﻿@model MVCProject.Models.ApplicationUser
+@using (Html.BeginForm())
+{
+    @Html.HiddenFor(model => model.Id)
+    <p>UserName:@Html.DisplayFor(model => model.UserName)</p>
+    <p>Are you sure to delete it?</p>
+    <input type="submit" />
+}
+

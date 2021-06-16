@@ -10,11 +10,6 @@ using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
 using System.Web.Mvc;
-using Microsoft.AspNet.Identity;
-using MVCProject.Models;
-using PagedList;
-using PagedList.Mvc;
-using Rotativa;
 
 
 namespace MVCProject.Controllers
