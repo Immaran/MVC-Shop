@@ -1,17 +1,15 @@
-﻿using System;
+﻿using Microsoft.AspNet.Identity;
+using MVCProject.Models;
+using PagedList;
+using Rotativa;
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
-using System.Diagnostics;
 using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
 using System.Web.Mvc;
-using Microsoft.AspNet.Identity;
-using MVCProject.Models;
-using PagedList;
-using PagedList.Mvc;
-using Rotativa;
 
 namespace MVCProject.Controllers
 {
@@ -94,14 +92,12 @@ namespace MVCProject.Controllers
             return View();
         }
 
-        public PartialViewResult SearchProducts(string searchText)
+        public ActionResult Popular()
         {
             var products = GetProducts();
-            products = products.OrderByDescending(i => i.Sold_units).Take(1).ToList();
+            products = products.OrderByDescending(i => i.Sold_units).Take(10).ToList();
             return View(products);
         }
-
-        
 
         //public PartialViewResult SearchProducts(string searchText)
         //{
