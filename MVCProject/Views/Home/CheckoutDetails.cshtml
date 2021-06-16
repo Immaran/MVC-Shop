@@ -1,0 +1,123 @@
+﻿@using MVCProject.Models
+@{
+    ViewBag.Title = "CheckoutDetails";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Checkout</h2>
+
+@if (Session["cart"] == null)
+{
+    Url.Action("Index", "Home");
+}
+else if (((List<Item>)Session["cart"]).Count == 0)
+{
+    Url.Action("Index", "Home");
+}
+else if (ViewBag.Addresses.Count == 0)
+{
+    <div class="alert alert-danger">
+        <strong>No address added! Go to <a>@Html.ActionLink("your profile", "Index", "Manage")</a> and add at least one delivery address!</strong>
+    </div>
+}
+else
+{
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>Product</th>
+                <th>Price</th>
+                <th>Quantity</th>
+                <th>Line Total</th>
+
+            </tr>
+        </thead>
+        <tbody>
+            @{
+                int Total = 0;
+            }
+            @foreach (Item item in (List<Item>)Session["cart"])
+            {
+                int lineTotal = Convert.ToInt32(item.Quantity * item.Product.Price);
+                Total = Convert.ToInt32(@Total + lineTotal);
+                <tr>
+                    <td>@item.Product.Name</td>
+                    <td>@item.Product.Price</td>
+                    <td>@item.Quantity</td>
+                    <td>@lineTotal</td>
+                </tr>
+            }
+            <tr>
+                <td colspan="4" class="text-right"><b>Total: @Total</b></td>
+            </tr>
+        </tbody>
+    </table>
+    <div class="container-fluid" style="margin-bottom: 20px">
+        <div class="row">
+            <div class="col-md-4">
+                <h3>Select delivery address:</h3>
+                @{
+                    for (int i = 0; i < ViewBag.Addresses.Count; i++)
+                    {
+                        <div class="table-bordered">
+                            <input type="radio" id="addressRadiobox@(i)" name="check0" addressid="@ViewBag.Addresses[i].AddressID">
+                            <label for="check0">Select</label>
+                            <dl class="dl-horizontal">
+                                <dt>Name:</dt>
+                                <dd>@ViewBag.Addresses[i].Name</dd>
+                                <dt>Country:</dt>
+                                <dd>@ViewBag.Addresses[i].Country</dd>
+                                <dt>Province:</dt>
+                                <dd>@ViewBag.Addresses[i].Province</dd>
+                                <dt>City:</dt>
+                                <dd>@ViewBag.Addresses[i].City</dd>
+                                <dt>Street</dt>
+                                <dd>@ViewBag.Addresses[i].Street</dd>
+                                <dt>Building number:</dt>
+                                <dd>@ViewBag.Addresses[i].BuildingNumber</dd>
+                                <dt>Apartment number:</dt>
+                                <dd>@ViewBag.Addresses[i].ApartmentNumber</dd>
+                                <dt>Postal code:</dt>
+                                <dd>@ViewBag.Addresses[i].PostalCode</dd>
+                            </dl>
+                        </div>
+                    }
+                }
+            </div>
+            <div class="col-md-4">
+                <h3>Select delivery method:</h3>
+                @{
+                    for (int j = 0; j < ViewBag.Delivery.Count; j++)
+                    {
+                        <div class="table-bordered">
+                            <input type="radio" id="deliveryRadiobox@(j)" name="check1" deliveryid="@ViewBag.Delivery[j].DeliveryMethodID">
+                            <label for="check1">Select</label>
+                            <dl class="dl-horizontal">
+                                <dt>Name:</dt>
+                                <dd>@ViewBag.Delivery[j].Name</dd>
+                            </dl>
+                        </div>
+                    }
+                }
+            </div>
+            <div class="col-md-4">
+                <h3>Select payment method:</h3>
+                @{
+                    for (int j = 0; j < ViewBag.Payment.Count; j++)
+                    {
+                        <div class="table-bordered">
+                            <input type="radio" id="paymentRadiobox@(j)" name="check2" paynmentid="@ViewBag.Payment[j].PaymentMethodID">
+                            <label for="check2">Select</label>
+                            <dl class="dl-horizontal">
+                                <dt>Name:</dt>
+                                <dd>@ViewBag.Payment[j].Name</dd>
+                            </dl>
+                        </div>
+                    }
+                }
+            </div>
+        </div>
+    </div>
+
+    <button class="btn btn-success">Payment >></button>
+}
