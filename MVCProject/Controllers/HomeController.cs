@@ -10,14 +10,12 @@ using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
 using System.Web.Mvc;
-<<<<<<< HEAD
 using Microsoft.AspNet.Identity;
 using MVCProject.Models;
 using PagedList;
 using PagedList.Mvc;
 using Rotativa;
-=======
->>>>>>> 2ec158e24de2ca25c0ca2fe535141d03b8ce6250
+
 
 namespace MVCProject.Controllers
 {
@@ -27,11 +25,6 @@ namespace MVCProject.Controllers
 
         public ActionResult Index(string searchText, string currentFilter, int? page, int? pageSize)
         {
-            //var model = new ProductFileViewModel()
-            //{
-            //    Products = GetProducts(),
-            //    Files = db.Files.Include(x => x.Product_Files),
-            //};
             var productFiles = db.Product_Files.Include(p => p.File).ToList();
             ViewBag.Image = productFiles;
 
@@ -106,19 +99,6 @@ namespace MVCProject.Controllers
             products = products.OrderByDescending(i => i.Sold_units).Take(10).ToList();
             return View(products);
         }
-
-        
-
-        //public PartialViewResult SearchProducts(string searchText)
-        //{
-        //    var products = GetProducts();
-        //    if(!String.IsNullOrEmpty(searchText))
-        //    {
-        //        var result = products.Where(a => a.Name.ToLower().Contains(searchText?.ToLower()) || a.Producer.Name.ToLower().Contains(searchText?.ToLower())).ToList();
-        //        return PartialView("_GridView", result);
-        //    }
-        //    return PartialView(products);
-        //}
 
         public List<Product> GetProducts()
         {
