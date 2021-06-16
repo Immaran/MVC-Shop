@@ -49,7 +49,11 @@
                     </div>
                 </div>
 
+<<<<<<< HEAD
                 <div class="col-md-5" style="font-size: 14px; border-top: 2px solid maroon; padding: 2px">
+=======
+                <div class="col-md-5" style="font-size: 15px; border-top: 2px solid maroon; padding: 2px">
+>>>>>>> 2ec158e24de2ca25c0ca2fe535141d03b8ce6250
                     <div>
 
                         <b>Price: @item.Price PLN</b>
@@ -58,11 +62,21 @@
                     <b>In stock: @item.Quantity</b>
                 </div>
                 <div class="col-md-3" style="text-align: right; margin-bottom: 10px; border-top: 2px solid maroon; padding: 2px">
-                    <input type="button" name="Details" value="Details" class="btn btn-primary" productid="@item.ProductID" id="btnAddToCart" onclick="location.href = '@Url.Action("Details", "Home", new { id=item.ProductID })'" />
+                    <input type="button" name="Details" value="Details" class="btn btn-primary" productid="@item.ProductID" id="btnDetails" onclick="location.href = '@Url.Action("Details", "Home", new { id=item.ProductID })'" />
                     
                 </div>
                 <div class="col-md-4" style="text-align: right; margin-bottom: 10px; border-top: 2px solid maroon; padding: 2px">
-                    <input type="button" name="AddToCart" value="Add to Cart" class="btn btn-primary" productid="@item.ProductID" id="btnAddToCart" onclick="AddToCart(this)" />
+                    @if (item.Quantity > 0)
+                    {
+                        using (Html.BeginForm("AddToCart", "Home", new { productId = item.ProductID, url = "Index" }, FormMethod.Post))
+                        {
+                            <button name="AddToCart" class="btn btn-primary" productid="@item.ProductID" id="btnAddToCart">Add to cart</button>
+                        }
+                    }
+                    else
+                    {
+                        <button name="AddToCart" class="btn btn-primary" disabled="disabled">Add to cart</button>
+                    }
                 </div>
             </div>
         }

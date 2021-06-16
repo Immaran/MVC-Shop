@@ -260,6 +260,7 @@
     <Compile Include="Models\File.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\Invoice.cs" />
+    <Compile Include="Models\Item.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\Order.cs" />
     <Compile Include="Models\PaymentMethod.cs" />
@@ -377,6 +378,7 @@
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
     <Content Include="Scripts\modernizr-2.8.3.js" />
     <Content Include="Scripts\selectize.js" />
+    <Content Include="Styles\custom.css" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
@@ -428,6 +430,8 @@
     <Content Include="Views\Home\Details.cshtml" />
     <Content Include="Views\Home\PDF.cshtml" />
     <Content Include="Views\Home\_PDFDetails.cshtml" />
+    <Content Include="Views\Home\Checkout.cshtml" />
+    <Content Include="Views\Home\CheckoutDetails.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
