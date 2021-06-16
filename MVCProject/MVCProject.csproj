@@ -231,10 +231,6 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\202106161632071_PiotrInit.cs" />
-    <Compile Include="Migrations\202106161632071_PiotrInit.Designer.cs">
-      <DependentUpon>202106161632071_PiotrInit.cs</DependentUpon>
-    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Address.cs" />
@@ -409,7 +405,6 @@
     <Content Include="Views\Home\_PDFDetails.cshtml" />
     <Content Include="Views\Home\Checkout.cshtml" />
     <Content Include="Views\Home\CheckoutDetails.cshtml" />
-    <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
@@ -419,11 +414,6 @@
   <ItemGroup>
     <Folder Include="Areas\Admin\Data\" />
     <Folder Include="Images\" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Migrations\202106161632071_PiotrInit.resx">
-      <DependentUpon>202106161632071_PiotrInit.cs</DependentUpon>
-    </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
