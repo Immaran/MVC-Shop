@@ -6,6 +6,7 @@ using System.Linq;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
+using Microsoft.AspNet.Identity;
 using MVCProject.Models;
 
 namespace MVCProject.Controllers
@@ -52,9 +53,10 @@ namespace MVCProject.Controllers
         {
             if (ModelState.IsValid)
             {
+                address.UserID = User.Identity.GetUserId();
                 db.Addresses.Add(address);
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                return RedirectToAction("Index", "Home");
             }
 
             ViewBag.UserID = new SelectList(db.Users, "Id", "Email", address.UserID);
@@ -86,9 +88,10 @@ namespace MVCProject.Controllers
         {
             if (ModelState.IsValid)
             {
+                address.UserID = User.Identity.GetUserId();
                 db.Entry(address).State = EntityState.Modified;
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                return RedirectToAction("Index", "Home");
             }
             ViewBag.UserID = new SelectList(db.Users, "Id", "Email", address.UserID);
             return View(address);
@@ -117,7 +120,7 @@ namespace MVCProject.Controllers
             Address address = db.Addresses.Find(id);
             db.Addresses.Remove(address);
             db.SaveChanges();
-            return RedirectToAction("Index");
+            return RedirectToAction("Index", "Home");
         }
 
         protected override void Dispose(bool disposing)

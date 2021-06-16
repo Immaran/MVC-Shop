@@ -6,6 +6,7 @@ using System.Linq;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
+using Microsoft.AspNet.Identity;
 using MVCProject.Models;
 using PagedList;
 using PagedList.Mvc;
@@ -118,6 +119,15 @@ namespace MVCProject.Controllers
             ViewBag.Products = db.Products.Include(x=>x.Producer).Where(x=>x.CategoryID == id).ToList();
             var report = new PartialViewAsPdf("~/Views/Home/_PDFDetails.cshtml", category);
             return report;
+        }
+
+        public ActionResult AddNewAddress()
+        {
+            var userId = User.Identity.GetUserId();
+            List<Address> addresses = db.Addresses.Where(x => x.UserID == userId).ToList();
+            ViewBag.Addresses = addresses;
+
+            return View();
         }
     }
 }
