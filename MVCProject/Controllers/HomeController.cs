@@ -61,7 +61,7 @@ namespace MVCProject.Controllers
         public ActionResult Popular()
         {
             var products = GetProducts();
-            products = products.OrderByDescending(i => i.Sold_units).Take(1).ToList();
+            products = products.OrderByDescending(i => i.Sold_units).Take(10).ToList();
             return View(products);
         }
 
