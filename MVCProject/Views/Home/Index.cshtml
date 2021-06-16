@@ -5,17 +5,16 @@
     ViewBag.Title = "Sklep Internetowy";
 }
 
-<h2>Strona główna</h2>
-<div class="row">
-    <div class="col-sm-12">
-        <div class="form-inline pull-left">
+<div class="navbar-text col-md-12 col-sm-12 col-xs-12 text-center" style="margin-top: 10px;>
+    <div class="col-sm-12" style="margin-bottom: 10px">
+        <div class="form-inline" style="text-align:center">
             @using (Html.BeginForm("Index", "Home", FormMethod.Get, new { id = "form1" }))
             {
                 <p>
                     @Html.TextBox("SearchText", ViewBag.CurrentFilter as string)
                     <input type="submit" value="Search" />
                 </p>
-                <div id='Paging' style="text-align: left">
+                <div id='Paging' style="text-align: center">
                     @*Dorpdownlist generation code*@
                     Page Size: @Html.DropDownList("pageSize")
                 </div>
@@ -24,58 +23,61 @@
 
         @*<embed src="~/counter.txt">*@
     </div>
-    <div class="container">
-        <h2 class="text-center">Products List</h2>
+    <div class="container text-center">
+        <h2 class="">Products List</h2>
         @foreach (var item in Model)
         {
-            <div class="col-md-4" style="border: 2px solid black; border-radius: 10px; margin: 5px">
-                <div style="text-align: center; border-bottom: 2px solid maroon ">
-                    <h3>@item.Name</h3>
-                    <h4>@item.Producer.Name</h4>
-                </div>
-                <div>
-                    <div class="col-md-8">
-                        @for (int i = 0; i < ViewBag.Image.Count; i++)
-                        {
-                            if (ViewBag.Image[i].ProductID == item.ProductID)
+            <div class="col-md-offset-4">
+
+                <div class="col-md-6 container-fluid text-center" style="border: 2px solid black; border-radius: 10px; margin: 2px">
+                    <div style="text-align: center; border-bottom: 2px solid black ">
+                        <h3>@item.Name</h3>
+                        <h4>@item.Producer.Name</h4>
+                    </div>
+                        <div>
+                            @for (int i = 0; i < ViewBag.Image.Count; i++)
                             {
-                                <img class="img-responsive" src="@Url.Content(ViewBag.Image[i].File.Path)" width="150px" />
-                                break;
+                                if (ViewBag.Image[i].ProductID == item.ProductID)
+                                {
+                                    <img style="text-align: center" src="@Url.Content(ViewBag.Image[i].File.Path)" width="150px" />
+                                    break;
+                                }
                             }
-                        }
-                    </div>
-                    <div class="col-md-4" style="text-align: left">
-                        <b>Category: @item.Category.Name</b>
-                    </div>
-                </div>
-                <div class="col-md-5" style="font-size: 15px; border-top: 2px solid maroon; padding: 2px">
+                        </div>
+                    <div style="font-size: 15px; border-top: 2px solid black; padding: 2px">
 
-                    <div>
-
-                        <b>Price: @item.Price PLN</b>
+                        <div>
+                            <b>Category: @item.Category.Name</b>
+                        </div>
+                        <div>
+                            <b>Price: @item.Price PLN</b>
+                        </div>
+                        <div>
+                            <b>In stock: @item.Quantity</b>
+                        </div>
+                        <div>
+                            <input type="button" name="Details" value="Details" class="btn btn-primary" productid="@item.ProductID" id="btnDetails" onclick="location.href = '@Url.Action("Details", "Home", new { id=item.ProductID })'" />
+                        </div>
+                        <div style="text-align: center; padding: 2px">
+                            @if (item.Quantity > 0)
+                            {
+                                using (Html.BeginForm("AddToCart", "Home", new { productId = item.ProductID, url = "Index" }, FormMethod.Post))
+                                {
+                                    <button name="AddToCart" class="btn btn-primary" productid="@item.ProductID" id="btnAddToCart">Add to cart</button>
+                                }
+                            }
+                            else
+                            {
+                                <button name="AddToCart" class="btn btn-primary" disabled="disabled">Add to cart</button>
+                            }
+                        </div>
                     </div>
-
-                    <b>In stock: @item.Quantity</b>
-                </div>
-                <div class="col-md-3" style="text-align: right; margin-bottom: 10px; border-top: 2px solid maroon; padding: 2px">
-                    <input type="button" name="Details" value="Details" class="btn btn-primary" productid="@item.ProductID" id="btnDetails" onclick="location.href = '@Url.Action("Details", "Home", new { id=item.ProductID })'" />
-                    
-                </div>
-                <div class="col-md-4" style="text-align: right; margin-bottom: 10px; border-top: 2px solid maroon; padding: 2px">
-                    @if (item.Quantity > 0)
-                    {
-                        using (Html.BeginForm("AddToCart", "Home", new { productId = item.ProductID, url = "Index" }, FormMethod.Post))
-                        {
-                            <button name="AddToCart" class="btn btn-primary" productid="@item.ProductID" id="btnAddToCart">Add to cart</button>
-                        }
-                    }
-                    else
-                    {
-                        <button name="AddToCart" class="btn btn-primary" disabled="disabled">Add to cart</button>
-                    }
                 </div>
             </div>
         }
+    </div>
+    <div class="navbar-text col-md-12 col-sm-12 col-xs-12 text-center">
+        @Html.PagedListPager(Model, page => Url.Action("Index", new { page, currentFilter = ViewBag.CurrentFilter, pageSize = ViewBag.psize }))
     </div>
 </div>
 
@@ -89,5 +91,3 @@
         });
     });
 </script>
-
-@Html.PagedListPager(Model, page => Url.Action("Index", new { page, currentFilter = ViewBag.CurrentFilter, pageSize = ViewBag.psize }))

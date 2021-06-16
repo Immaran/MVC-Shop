@@ -16,13 +16,11 @@
             {
                 <img class="center-block" src="@Url.Content(ViewBag.Image[i].File.Path)" width="300px" />
                 <ul class='list-group list-group-flush'>
-                    <li class='list-group-item'>
-                        <div class='row'>
-                            <div class='col-md-12'>
-                                <p>@ViewBag.Image[i].File.Description</p>
-                            </div>
+                    <div class='row'>
+                        <div class='col-md-12'>
+                            <p>@ViewBag.Image[i].File.Description</p>
                         </div>
-                    </li>
+                    </div>
                 </ul>
             }
         </div>
@@ -49,7 +47,7 @@
 <div class='card-body text-center'>
     <div class="row">
         <div class="col-md-12">
-            <p class="text-justify">Ambitioni dedisse scripsisse iudicaretur. Cras mattis iudicium purus sit amet fermentum. Donec sed odio operae, eu vulputate felis rhoncus. Praeterea iter est quasdam res quas ex communi. At nos hinc posthac, sitientis piros Afros. Petierunt uti sibi concilium totius Galliae in diem certam indicere. Cras mattis iudicium purus sit amet fermentum.</p>
+            <p style="text-align:center" class="text-justify">@Html.DisplayFor(model => model.Description)</p>
         </div>
     </div>
 </div>

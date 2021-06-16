@@ -90,6 +90,8 @@ namespace MVCProject.Controllers
 
         public ActionResult Popular()
         {
+            var productFiles = db.Product_Files.Include(p => p.File).Where(x => x.Product.Visibility == true).ToList();
+            ViewBag.Image = productFiles;
             var products = GetProducts();
             products = products.OrderByDescending(i => i.Sold_units).Take(10).ToList();
             return View(products);
@@ -98,6 +100,7 @@ namespace MVCProject.Controllers
         public List<Product> GetProducts()
         {
             var products = db.Products.Include(p => p.Category).Include(p => p.Producer).Where(x=>x.Visibility == true).Where(p=>p.Category.Visibility == true).Include(p => p.Tax);
+            var cos = db.Addresses;
             return products.ToList();
         }
 
