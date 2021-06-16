@@ -3,10 +3,13 @@
 <table class="table">
     <tr>
         <th>
-            @Html.DisplayNameFor(model => model.Name)
+            Product Name:
         </th>
         <th>
-            Price
+            Producer:
+        </th>
+        <th>
+            Price:
         </th>
     </tr>
 
@@ -17,8 +20,10 @@
                 @ViewBag.Products[i].Name
             </td>
             <td>
+                @ViewBag.Products[i].Producer.Name
+            </td>
+            <td>
                 @ViewBag.Products[i].Price
             </td>
         </tr>
-
     }

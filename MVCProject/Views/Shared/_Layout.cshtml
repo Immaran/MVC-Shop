@@ -17,13 +17,10 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                @Html.ActionLink("Application name", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+                @Html.ActionLink("Home", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
-                    <li>@Html.ActionLink("Home", "Index", "Home")</li>
-                    <li>@Html.ActionLink("About", "About", "Home")</li>
-                    <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
                     <li>@Html.ActionLink("Top 10 products", "Popular", "Home")</li>
                     <li>@Html.ActionLink("Price Table", "PDF", "Home")</li>
                 </ul>
@@ -34,8 +31,12 @@
     </div>
     <div class="container body-content">
         @RenderBody()
-        <hr />
     </div>
+    <nav class="navbar navbar-default navbar-fixed-bottom" role="navigation">
+        <div class="container-fluid text-center">
+            <p class="navbar-text col-md-12 col-sm-12 col-xs-12">Total Number of visitors: @ApplicationInstance.Application["Totaluser"]</p>
+        </div>
+    </nav>
 
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")

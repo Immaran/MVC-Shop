@@ -115,7 +115,7 @@ namespace MVCProject.Controllers
         public ActionResult PrintPartialViewToPdf(int id)
         {
             var category = db.Categories.Where(c => c.CategoryID == id).ToList();
-            ViewBag.Products = db.Products.Where(x=>x.CategoryID == id).ToList();
+            ViewBag.Products = db.Products.Include(x=>x.Producer).Where(x=>x.CategoryID == id).ToList();
             var report = new PartialViewAsPdf("~/Views/Home/_PDFDetails.cshtml", category);
             return report;
         }
