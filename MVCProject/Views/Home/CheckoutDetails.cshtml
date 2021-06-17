@@ -34,21 +34,21 @@ else
         </thead>
         <tbody>
             @{
-                int Total = 0;
+                var Total = 0.00;
             }
             @foreach (Item item in (List<Item>)Session["cart"])
             {
-                int lineTotal = Convert.ToInt32(item.Quantity * item.Product.Price);
-                Total = Convert.ToInt32(@Total + lineTotal);
+                var lineTotal = item.Quantity * item.Product.Price;
+                Total = Total + (double)lineTotal;
                 <tr>
                     <td>@item.Product.Name</td>
-                    <td>@item.Product.Price</td>
+                    <td>@item.Product.Price PLN</td>
                     <td>@item.Quantity</td>
-                    <td>@lineTotal</td>
+                    <td>@lineTotal PLN</td>
                 </tr>
             }
             <tr>
-                <td colspan="4" class="text-right"><b>Total: @Total</b></td>
+                <td colspan="4" class="text-right"><b>Total: @Total PLN</b></td>
             </tr>
         </tbody>
     </table>

@@ -55,6 +55,7 @@ namespace MVCProject.Models
 		public DbSet<Tag> Tags { get; set; }
 		public DbSet<Tax> Taxes { get; set; }
 		public DbSet<Counter> Counters { get; set; }
+		public DbSet<Status> Statuses { get; set; }
 
 		public System.Data.Entity.DbSet<MVCProject.Models.Invoice> Invoices { get; set; }
     }

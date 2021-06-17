@@ -16,6 +16,8 @@ namespace MVCProject.Models
         public virtual Address Address { get; set; }
         public int DeliveryMethodID { get; set; }
         public virtual DeliveryMethod DeliveryMethod { get; set; }
+        public int StatusID { get; set; }
+        public virtual Status Status { get; set; }
         public int PaymentMethodID { get; set; }
         public virtual PaymentMethod PaymentMethod { get; set; }
         public virtual ICollection<Product_Order> Product_Orders { get; set; }

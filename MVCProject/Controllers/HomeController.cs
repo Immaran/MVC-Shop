@@ -50,7 +50,7 @@ namespace MVCProject.Controllers
             var products = GetProducts();
             if (!String.IsNullOrEmpty(searchText))
             {
-                products = products.Where(a => a.Name.ToLower().Contains(searchText?.ToLower()) || a.Producer.Name.ToLower().Contains(searchText?.ToLower())).ToList();
+                products = products.Where(a => a.Name.ToLower().Contains(searchText?.ToLower()) || a.Price.ToString().Contains(searchText?.ToLower()) || a.Quantity.ToString().Contains(searchText?.ToLower()) || a.Category.Name.ToLower().Contains(searchText?.ToLower()) || a.Producer.Name.ToLower().Contains(searchText?.ToLower())).ToList();
             }
             return View(products.ToPagedList(pageIndex, defaSize));
         }
@@ -225,7 +225,7 @@ namespace MVCProject.Controllers
 
             List<Item> products = (List<Item>)Session["cart"];
 
-            Order order = new Order { UserID = userId, AddressID = details.AddressID, DeliveryMethodID = details.DeliveryID, PaymentMethodID = details.PaymentID };
+            Order order = new Order { UserID = userId, AddressID = details.AddressID, DeliveryMethodID = details.DeliveryID, PaymentMethodID = details.PaymentID, StatusID = 1 };
 
             order = db.Orders.Add(order);
             db.SaveChanges();

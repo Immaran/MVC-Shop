@@ -18,7 +18,7 @@ namespace MVCProject.Areas.Admin.Controllers
         // GET: Admin/Orders
         public ActionResult Index()
         {
-            var orders = db.Orders.Include(o => o.Address).Include(o => o.DeliveryMethod).Include(o => o.Invoice).Include(o => o.PaymentMethod).Include(o => o.User);
+            var orders = db.Orders.Include(o => o.Address).Include(o => o.DeliveryMethod).Include(o => o.Invoice).Include(o => o.PaymentMethod).Include(o => o.Status).Include(o => o.User);
             return View(orders.ToList());
         }
 
@@ -44,6 +44,7 @@ namespace MVCProject.Areas.Admin.Controllers
             ViewBag.DeliveryMethodID = new SelectList(db.DeliveryMethods, "DeliveryMethodID", "Name");
             ViewBag.OrderID = new SelectList(db.Invoices, "OrderID", "Name");
             ViewBag.PaymentMethodID = new SelectList(db.PaymentMethods, "PaymentMethodID", "Name");
+            ViewBag.StatusID = new SelectList(db.Statuses, "StatusID", "StatusName");
             ViewBag.UserID = new SelectList(db.Users, "Id", "FirstName");
             return View();
         }
@@ -53,7 +54,7 @@ namespace MVCProject.Areas.Admin.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "OrderID,UserID,AddressID,DeliveryMethodID,PaymentMethodID")] Order order)
+        public ActionResult Create([Bind(Include = "OrderID,UserID,AddressID,DeliveryMethodID,StatusID,PaymentMethodID")] Order order)
         {
             if (ModelState.IsValid)
             {
@@ -66,6 +67,7 @@ namespace MVCProject.Areas.Admin.Controllers
             ViewBag.DeliveryMethodID = new SelectList(db.DeliveryMethods, "DeliveryMethodID", "Name", order.DeliveryMethodID);
             ViewBag.OrderID = new SelectList(db.Invoices, "OrderID", "Name", order.OrderID);
             ViewBag.PaymentMethodID = new SelectList(db.PaymentMethods, "PaymentMethodID", "Name", order.PaymentMethodID);
+            ViewBag.StatusID = new SelectList(db.Statuses, "StatusID", "StatusName", order.StatusID);
             ViewBag.UserID = new SelectList(db.Users, "Id", "FirstName", order.UserID);
             return View(order);
         }
@@ -86,6 +88,7 @@ namespace MVCProject.Areas.Admin.Controllers
             ViewBag.DeliveryMethodID = new SelectList(db.DeliveryMethods, "DeliveryMethodID", "Name", order.DeliveryMethodID);
             ViewBag.OrderID = new SelectList(db.Invoices, "OrderID", "Name", order.OrderID);
             ViewBag.PaymentMethodID = new SelectList(db.PaymentMethods, "PaymentMethodID", "Name", order.PaymentMethodID);
+            ViewBag.StatusID = new SelectList(db.Statuses, "StatusID", "StatusName", order.StatusID);
             ViewBag.UserID = new SelectList(db.Users, "Id", "FirstName", order.UserID);
             return View(order);
         }
@@ -95,7 +98,7 @@ namespace MVCProject.Areas.Admin.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "OrderID,UserID,AddressID,DeliveryMethodID,PaymentMethodID")] Order order)
+        public ActionResult Edit([Bind(Include = "OrderID,UserID,AddressID,DeliveryMethodID,StatusID,PaymentMethodID")] Order order)
         {
             if (ModelState.IsValid)
             {
@@ -107,6 +110,7 @@ namespace MVCProject.Areas.Admin.Controllers
             ViewBag.DeliveryMethodID = new SelectList(db.DeliveryMethods, "DeliveryMethodID", "Name", order.DeliveryMethodID);
             ViewBag.OrderID = new SelectList(db.Invoices, "OrderID", "Name", order.OrderID);
             ViewBag.PaymentMethodID = new SelectList(db.PaymentMethods, "PaymentMethodID", "Name", order.PaymentMethodID);
+            ViewBag.StatusID = new SelectList(db.Statuses, "StatusID", "StatusName", order.StatusID);
             ViewBag.UserID = new SelectList(db.Users, "Id", "FirstName", order.UserID);
             return View(order);
         }

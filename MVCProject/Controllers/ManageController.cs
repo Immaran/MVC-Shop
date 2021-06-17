@@ -80,8 +80,10 @@ namespace MVCProject.Controllers
             //Address address = db.Addresses.Find(userId);
 
             List<Address> addresses = await db.Addresses.Where(x => x.UserID == userId).ToListAsync();
+            List<Order> orders = await db.Orders.Where(x => x.UserID == userId).ToListAsync();
 
             ViewBag.Addresses = addresses;
+            ViewBag.Orders = orders;
 
             return View(model);
         }
