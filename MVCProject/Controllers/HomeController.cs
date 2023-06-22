@@ -7,6 +7,7 @@ using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
+using System.Diagnostics;
 using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
@@ -20,6 +21,7 @@ namespace MVCProject.Controllers
     {
         private ApplicationDbContext db = new ApplicationDbContext();
 
+        [LoggingAspect]
         public ActionResult Index(string searchText, string currentFilter, int? page, int? pageSize)
         {
             var productFiles = db.Product_Files.Include(p => p.File).Where(x=>x.Product.Visibility == true).ToList();

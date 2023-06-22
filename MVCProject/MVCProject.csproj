@@ -1,5 +1,8 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="15.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="..\packages\Metalama.Framework.2023.0.119\build\Metalama.Framework.props" Condition="Exists('..\packages\Metalama.Framework.2023.0.119\build\Metalama.Framework.props')" />
+  <Import Project="..\packages\Metalama.Compiler.2023.0.112\build\Metalama.Compiler.props" Condition="Exists('..\packages\Metalama.Compiler.2023.0.112\build\Metalama.Compiler.props')" />
+  <Import Project="..\packages\PostSharp.2023.0.5\build\PostSharp.props" Condition="Exists('..\packages\PostSharp.2023.0.5\build\PostSharp.props')" />
   <Import Project="..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.1\build\net46\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props" Condition="Exists('..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.1\build\net46\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props')" />
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
@@ -51,16 +54,28 @@
     <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
       <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.SqlServer.dll</HintPath>
     </Reference>
+    <Reference Include="Metalama.Framework, Version=2023.0.119.0, Culture=neutral, PublicKeyToken=772fca7b1db8db06, processorArchitecture=MSIL">
+      <HintPath>..\packages\Metalama.Framework.Redist.2023.0.119\lib\netstandard2.0\Metalama.Framework.dll</HintPath>
+    </Reference>
+    <Reference Include="Metalama.SystemTypes, Version=2023.0.119.0, Culture=neutral, PublicKeyToken=772fca7b1db8db06, processorArchitecture=MSIL">
+      <HintPath>..\packages\Metalama.Framework.Redist.2023.0.119\lib\netstandard2.0\Metalama.SystemTypes.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="Microsoft.Extensions.Primitives, Version=5.0.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.Extensions.Primitives.5.0.0\lib\net461\Microsoft.Extensions.Primitives.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.VisualBasic" />
+    <Reference Include="Microsoft.VisualStudio.QualityTools.UnitTestFramework, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.VisualStudio.UnitTesting.11.0.50727.1\lib\net45\Microsoft.VisualStudio.QualityTools.UnitTestFramework.dll</HintPath>
+    </Reference>
     <Reference Include="PagedList, Version=1.17.0.0, Culture=neutral, PublicKeyToken=abbb863e9397c5e1, processorArchitecture=MSIL">
       <HintPath>..\packages\PagedList.1.17.0.0\lib\net40\PagedList.dll</HintPath>
     </Reference>
     <Reference Include="PagedList.Mvc, Version=4.5.0.0, Culture=neutral, PublicKeyToken=abbb863e9397c5e1, processorArchitecture=MSIL">
       <HintPath>..\packages\PagedList.Mvc.4.5.0.0\lib\net40\PagedList.Mvc.dll</HintPath>
+    </Reference>
+    <Reference Include="PostSharp, Version=2023.0.5.0, Culture=neutral, PublicKeyToken=b13fd38b8f9c99d7, processorArchitecture=MSIL">
+      <HintPath>..\packages\PostSharp.Redist.2023.0.5\lib\net45\PostSharp.dll</HintPath>
     </Reference>
     <Reference Include="Rotativa, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Rotativa.1.7.3\lib\net461\Rotativa.dll</HintPath>
@@ -74,6 +89,9 @@
     <Reference Include="System" />
     <Reference Include="System.Buffers, Version=4.0.3.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
       <HintPath>..\packages\System.Buffers.4.5.1\lib\net461\System.Buffers.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Collections.Immutable, Version=5.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Collections.Immutable.5.0.0\lib\net461\System.Collections.Immutable.dll</HintPath>
     </Reference>
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
@@ -225,6 +243,7 @@
     <Compile Include="Areas\Admin\Controllers\TagsController.cs" />
     <Compile Include="Areas\Admin\Controllers\TaxesController.cs" />
     <Compile Include="Areas\Admin\Controllers\UsersController.cs" />
+    <Compile Include="Aspects\LoggingAspect.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\AddressesController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
@@ -266,6 +285,7 @@
     <Compile Include="Models\Tax.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
+    <Compile Include="Tests\HomeTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="App_Data\ShopDB.mdf" />
@@ -483,7 +503,16 @@
       <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
     </PropertyGroup>
     <Error Condition="!Exists('..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.1\build\net46\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.1\build\net46\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props'))" />
+    <Error Condition="!Exists('..\packages\PostSharp.2023.0.5\build\PostSharp.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\PostSharp.2023.0.5\build\PostSharp.props'))" />
+    <Error Condition="!Exists('..\packages\PostSharp.2023.0.5\build\PostSharp.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\PostSharp.2023.0.5\build\PostSharp.targets'))" />
+    <Error Condition="!Exists('..\packages\Metalama.Compiler.2023.0.112\build\Metalama.Compiler.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Metalama.Compiler.2023.0.112\build\Metalama.Compiler.props'))" />
+    <Error Condition="!Exists('..\packages\Metalama.Compiler.2023.0.112\build\Metalama.Compiler.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Metalama.Compiler.2023.0.112\build\Metalama.Compiler.targets'))" />
+    <Error Condition="!Exists('..\packages\Metalama.Framework.2023.0.119\build\Metalama.Framework.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Metalama.Framework.2023.0.119\build\Metalama.Framework.props'))" />
+    <Error Condition="!Exists('..\packages\Metalama.Framework.2023.0.119\build\Metalama.Framework.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Metalama.Framework.2023.0.119\build\Metalama.Framework.targets'))" />
   </Target>
+  <Import Project="..\packages\PostSharp.2023.0.5\build\PostSharp.targets" Condition="Exists('..\packages\PostSharp.2023.0.5\build\PostSharp.targets')" />
+  <Import Project="..\packages\Metalama.Compiler.2023.0.112\build\Metalama.Compiler.targets" Condition="Exists('..\packages\Metalama.Compiler.2023.0.112\build\Metalama.Compiler.targets')" />
+  <Import Project="..\packages\Metalama.Framework.2023.0.119\build\Metalama.Framework.targets" Condition="Exists('..\packages\Metalama.Framework.2023.0.119\build\Metalama.Framework.targets')" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it.
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">

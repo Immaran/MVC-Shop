@@ -10,6 +10,7 @@ using MVCProject.Models;
 
 namespace MVCProject.Controllers
 {
+    [Authorize(Roles = "Admin")]
     public class ProductsController : Controller
     {
         private ApplicationDbContext db = new ApplicationDbContext();
